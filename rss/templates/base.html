@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+
+
+{% include 'header.html' %}
+
+
+<div class="container">
+	
+	{% block container %}
+
+	{% endblock %}
+
+	
+
+	{% block share %}
+	<div class="row">
+		<div class="span12">
+			<!-- JiaThis Button BEGIN -->
+			<div class="jiathis_style"><span class="jiathis_txt">分享到：</span>
+				
+				<a class="jiathis_button_tsina"></a>
+				<a class="jiathis_button_renren"></a>
+				<a class="jiathis_button_tqq"></a>				
+				<a class="jiathis_button_qzone"></a>
+				<a class="jiathis_button_kaixin001"></a>
+				<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+				<a class="jiathis_counter_style"></a>
+			</div>
+			<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1393933761064422" charset="utf-8"></script>
+
+			<!-- JiaThis Button END -->
+		</div>
+
+		<div class="span12">
+
+
+			<div class="ds-thread" data-thread-key="请将此处替换成文章在你的站点中的ID" data-title="我发现了一个有趣的地图,可以查看各地特色食物,快来看看" data-url="ys.8wss.com" data-image=http://ys.8wss.com/static/images/example.png></div>
+			<script type="text/javascript">
+			var duoshuoQuery = {short_name:"scir"};
+			(function() {
+				var ds = document.createElement('script');
+				ds.type = 'text/javascript';ds.async = true;
+				ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+				ds.charset = 'UTF-8';
+				(document.getElementsByTagName('head')[0] 
+					|| document.getElementsByTagName('body')[0]).appendChild(ds);
+			})();
+			</script>
+			<script type="text/javascript" >
+			var jiathis_config={
+				url:"http://ys.8wss.com",
+				summary:"利用@语言云 技术，深入挖掘微博信息。#饮食地图# 可以分地区，分性别，分时间查看特色饮食。北京人真的爱吃烤鸭吗？黑龙江的特色食物是什么？详情请见:",
+				title:"微博用户饮食地图",
+				pic:"http://ys.8wss.com/static/images/example.jpg",
+				ralateuid:{
+					"tsina":"hitcir"
+				},
+				shortUrl:true,
+				hideMore:false
+			}
+			</script>
+
+		</div>
+
+	</div>
+	{% endblock %}
+
+</div>
+
+
+{% include 'footer.html' %}
+
+{% block js %}
+{% endblock %}

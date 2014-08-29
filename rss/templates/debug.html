@@ -1,0 +1,29 @@
+{% extends "index.html" %}
+
+
+{% block wordcloud_js %}
+
+<script type="text/javascript">
+function word_cloud(msg)
+{
+	var obj = JSON.parse(msg);
+	mylist = obj["weight"];
+	mycolor = obj["color"];
+	WordCloud(document.getElementById('myCanvas'), 
+		{ list: mylist,
+			gridSize:5,
+			weightFactor: 2,
+			fontFamily: 'Average, Times, serif',
+			color: function(word){return mycolor[word];},
+			rotateRatio: 0,
+			click: function(item) {
+				var word = item[0];
+				var param2 = $('#form-submit').serialize();
+				param2 += "&word=" + word;
+				// window.location.href='./getcontent?' + param2;
+				window.open('./getcontent?' + param2);
+			 },  }
+			);
+}
+</script>
+{% endblock %}

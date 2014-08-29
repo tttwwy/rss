@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+
+<head>
+
+	<!-- Basic Page Needs
+	================================================== -->
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>微博用户饮食习惯分析</title>
+
+	<!-- Mobile Specific
+	================================================== -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- CSS
+	================================================== -->
+	<!-- <link rel="stylesheet" type="text/css"  href="static/css/stylenew.css"> -->
+	<!-- <link rel="stylesheet" rev="stylesheet" href="static/css/common.css" type="text/css" media="all" /> -->
+	<!-- <link rel="stylesheet" href="static/css/sexylightbox.css" type="text/css" media="all" /> -->
+	<link href="static/css/bootstrap.min.css" rel="stylesheet" media="screen">
+	<link href="static/css/bootstrap-responsive.css" rel="stylesheet">
+	<link href="static/css/prettify.css" rel="stylesheet">
+	<link href="static/css/docs.css" rel="stylesheet">
+	
+	<!-- JS
+	================================================== -->
+	<script type='text/javascript' src="static/js/jquery-1.3.2.min.js"></script>
+
+	<script type="text/javascript" src="static/js/jquery.easing.1.3.js"></script>
+	<!-- // <script type="text/javascript" src="static/js/sexylightbox.v2.3.jquery.min.js"></script> -->
+	<script src="static/js/bootstrap.min.js"></script>
+	<script src="static/js/wordcloud2.js"></script>
+<!-- 	
+	<span style="font-size: 16px;">
+	</span>
+-->
+<!-- 
+	<style>
+	#left a{
+		color: #1E50A2 !important;
+	}
+	body {margin:0;padding:0;}
+
+	#dataMap {position:relative;margin:0 auto;width:552px;height:447px;font-size:12px;background:url(static/images/map6south.png) no-repeat left top;}
+
+	#dataMap span {position:absolute;}
+
+	#dataMap a {display:block;padding-left:20px;line-height:1.8;text-decoration:none;color:#000;background:url(static/images/focus.gif) no-repeat left 4px;}
+
+	#dataMap a:hover,#dataMap a:active {color:#f00;background-position:left bottom;}
+
+	#dataMap a.hotcity {color:#f00;font-weight:700;}
+
+	#dataMap em {display:none;}
+
+	.dataTip {display:none;position:absolute;z-index:9999;font-size:12px;padding:0 3px;border:1px solid #000;background-color:#ffc;}
+
+	#header .container-fluid .four.columns #logo h1 .columns strong {
+		color: #FFF;
+	}
+	#header .container-fluid .four.columns #logo h1 .columns strong {
+		font-family: Palatino Linotype, Book Antiqua, Palatino, serif;
+	}
+	#header .container-fluid .four.columns #logo #logo a h1 {
+		color: #FFF;
+	}
+	#header .container-fluid .four.columns #logo #logo a h1 font {
+		font-family: Times New Roman, Times, serif;
+	}
+	#header .container-fluid .four.columns #logo #logo a h1 font {
+		font-family: Palatino Linotype, Book Antiqua, Palatino, serif;
+	}
+	#header .container-fluid .four.columns #logo #logo a h1 font {
+		font-family: Verdana, Geneva, sans-serif;
+	}
+	#header .container-fluid .four.columns #logo #logo h1 em {
+		color: #FFF;
+	}
+	</style>
+	<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->	
+
+	<!--[if (gte IE 6)&(lte IE 8)]>
+	  	<script src="js/selectivizr.js"></script>
+	  	<![endif]-->
+
+	  	<!-- </head> --> 
+	  	<!-- <body> -->
+
+	<!-- Primary Page Layout
+	================================================== -->
+<!--  	<div id = 'top'>
+		<div id="left">
+			<a href="http://www.8wss.com">首页</a>
+			<a href="http://qx.8wss.com">情绪地图</a>
+			<span>饮食地图</span>
+			<a href="http://yue.8wss.com">音乐资讯</a>
+		</div>
+	</div> --> 
+	<!-- Header -->
+<!-- 	<div id="header">
+
+
+		<div class="container-fluid">
+
+
+			<div class="six columns">
+				<div id="logo">
+					<div id="logo"><a href="index.html"><img src="static/images/logosuoblue.png" alt="" /></a></div>
+				</div>
+			</div>			
+		</div>
+	</div>
+-->
+<div class="navbar navbar-inverse navbar-fixed-top">
+	<div class="navbar-inner">
+		<div class="container-fluid">
+			<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			
+			<div class="nav-collapse collapse">
+				<p class="navbar-text pull-right">
+					<!-- Logged in as <a href="#" class="navbar-link">Username</a> -->
+				</p>
+
+				<ul class="nav">
+					<li><a class="brand" href="#">微博饮食地图</a></li> 
+					<li><a href="http://www.8wss.com">首页</a></li>
+					<li><a href="http://qx.8wss.com">情绪地图</a></li>
+					
+					<li><a href="http://yue.8wss.com">音乐资讯</a></li>
+		<!-- 			<li class="active"><a href="#">Home</a></li>
+					<li><a href="#about">About</a></li>
+					<li><a href="#contact">Contact</a></li> -->
+
+				</ul>
+
+			</div><!--/.nav-collapse -->
+		</div>
+	</div>
+</div>
+
+
+<div class="container">
+	
+	<div class="row-fluid">
+		<div class="span12">
+
+			<form class="form-inline"  id="form-submit">
+
+				<label>类别：</label>
+
+				<select  class = "span2" id="gender" name="kind"> 
+					<option selected="selected" value="all">全部</option>
+					<option value="fruit">水果</option>
+					<option value="food">小吃</option> 
+					<option value="wine">酒</option> 
+					<option value="drink">饮品</option> 
+					<option value="tea">茶</option> 
+				</select>
+
+
+				<label >省份：</label>
+				<select  class = "span2" id="cat" name="province"> 
+					<option selected="selected" value="">全国范围</option>
+					<option value="北京">北京市</option>
+					<option value="浙江">浙江</option>
+					<option value="天津">天津市</option>
+					<option value="安徽">安徽</option>
+					<option value="上海">上海市</option>
+					<option value="福建">福建</option> 
+					<option value="重庆">重庆市</option>
+					<option value="江西">江西</option>
+					<option value="山东">山东</option>
+					<option value="河南">河南</option>
+					<option value="湖北">湖北</option>
+					<option value="湖南">湖南</option>
+					<option value="广东">广东</option>
+					<option value="海南">海南</option>
+					<option value="山西">山西</option>
+					<option value="青海">青海</option>
+					<option value="江苏">江苏</option>
+					<option value="辽宁">辽宁</option>
+					<option value="吉林">吉林</option>
+					<option value="台湾">台湾</option>
+					<option value="河北">河北</option>
+					<option value="贵州">贵州</option>
+					<option value="四川">四川</option>
+					<option value="云南">云南</option>
+					<option value="陕西">陕西</option>
+					<option value="甘肃">甘肃</option>
+					<option value="黑龙江">黑龙江</option>
+					<option value="香港">香港</option>
+					<option value="澳门">澳门</option>
+					<option value="广西">广西</option>
+					<option value="宁夏">宁夏</option>
+					<option value="新疆">新疆</option>
+					<option value="内蒙古">内蒙古</option>
+					<option value="西藏">西藏</option>
+				</select>
+
+
+				<label>性别：</label>
+
+				<select  class = "span2" id="gender" name="sex"> 
+					<option selected="selected" value="">不限性别</option>
+					<option value="man">男</option>
+					<option value="woman">女</option> 
+				</select>
+
+				<label>微博时间：</label>
+				<select class = "span2" id="time" name="time">
+					<option selected="selected" value="">不限时间</option>
+					<option value="morning">早上/上午</option>
+					<option value="noon">中午</option> 
+					<option value="afternoon">下午</option>
+					<option value="evening">晚上</option> 
+				</select>
+
+				<button id = "food_search" type = "submit" class="btn btn-primary"><i class="icon-search"></i>查询</button> 
+			</form>
+		</div>
+	</div>
+
+	<div class="row-fluid">
+		<div class="span12">
+
+			<form class="form-inline"  id="form-submit2">
+
+				<label>类别：</label>
+
+				<select  class = "span2" id="gender" name="kind"> 
+					<option selected="selected" value="">全部</option>
+					<option value="fruit">水果</option>
+					<option value="food">小吃</option> 
+					<option value="wine">酒</option> 
+					<option value="drink">饮品</option> 
+					<option value="tea">茶</option> 
+				</select>
+
+
+				<label >省份：</label>
+				<select  class = "span2" id="cat" name="province"> 
+					<option selected="selected" value="">全国范围</option>
+					<option value="北京">北京市</option>
+					<option value="浙江">浙江</option>
+					<option value="天津">天津市</option>
+					<option value="安徽">安徽</option>
+					<option value="上海">上海市</option>
+					<option value="福建">福建</option> 
+					<option value="重庆">重庆市</option>
+					<option value="江西">江西</option>
+					<option value="山东">山东</option>
+					<option value="河南">河南</option>
+					<option value="湖北">湖北</option>
+					<option value="湖南">湖南</option>
+					<option value="广东">广东</option>
+					<option value="海南">海南</option>
+					<option value="山西">山西</option>
+					<option value="青海">青海</option>
+					<option value="江苏">江苏</option>
+					<option value="辽宁">辽宁</option>
+					<option value="吉林">吉林</option>
+					<option value="台湾">台湾</option>
+					<option value="河北">河北</option>
+					<option value="贵州">贵州</option>
+					<option value="四川">四川</option>
+					<option value="云南">云南</option>
+					<option value="陕西">陕西</option>
+					<option value="甘肃">甘肃</option>
+					<option value="黑龙江">黑龙江</option>
+					<option value="香港">香港特别行政区</option>
+					<option value="澳门">澳门特别行政区</option>
+					<option value="广西">广西壮族自治区</option>
+					<option value="宁夏">宁夏回族自治区</option>
+					<option value="新疆">新疆维吾尔自治区</option>
+					<option value="内蒙古">内蒙古自治区</option>
+					<option value="西藏">西藏自治区</option>
+				</select>
+
+
+				<label>性别：</label>
+
+				<select  class = "span2" id="gender" name="sex"> 
+					<option selected="selected" value="">不限性别</option>
+					<option value="man">男</option>
+					<option value="woman">女</option> 
+				</select>
+
+				<label>微博时间：</label>
+				<select class = "span2" id="time" name="time">
+					<option selected="selected" value="">不限时间</option>
+					<option value="morning">早上/上午</option>
+					<option value="noon">中午</option> 
+					<option value="afternoon">下午</option>
+					<option value="evening">晚上</option> 
+				</select>
+
+				<button id = "food_search2" type = "submit" class="btn btn-primary"><i class="icon-search"></i>查询</button> 
+			</form>
+		</div>
+	</div>
+
+	<div class="row-fluid">
+	<!-- 		
+			<div class="span4">
+				<div id="dataMap">
+
+
+
+					<span style="top:162px;left:392px"><a id = "prov1" rel="sexylightbox">北京</a></span>
+
+
+
+					<span style="top:110px;left:465px;"><a id = "prov7" rel="sexylightbox">吉林</a></span>
+
+
+					<span style="top:165px;left:305px"><a id = "prov5" rel="sexylightbox">内蒙古</a></span>
+
+					<span style="top:260px;left:120px"><a id = "prov26" rel="sexylightbox">西藏</a></span>
+
+					<span style="top:293px;left:255px"><a id = "prov23" rel="sexylightbox">四川</a></span>
+
+					<span style="top:290px;left:310px"><a id = "prov22" rel="sexylightbox">重庆</a></span>
+
+					<span style="top:365px;left:380px"><a id = "prov19" rel="sexylightbox">广东</a></span>
+
+					<span style="top:335px;left:295px"><a id = "prov24" rel="sexylightbox">贵州</a></span>
+
+					<span style="top:420px;left:342px"><a id = "prov21" rel="sexylightbox">海南</a></span>
+
+
+					<span style="top:70px;left:460px"><a id = "prov8" rel="sexylightbox">黑龙江</a></span>
+
+					<span style="top:296px;left:445px"><a id = "prov11" rel="sexylightbox">浙江</a></span>
+
+					<span style="top:265px;left:410px"><a id = "prov12" rel="sexylightbox">安徽</a></span>
+
+					<span style="top:206px;left:400px"><a id = "prov15" rel="sexylightbox">山东</a></span>
+
+					<span style="top:359px;left:237px"><a id = "prov25" rel="sexylightbox">云南</a></span>
+
+					<span style="top:222px;left:180px"><a id = "prov29" rel="sexylightbox">青海</a></span>
+
+					<span style="top:165px;left:200px"><a id = "prov28" rel="sexylightbox">甘肃</a></span>
+
+					<span style="top:200px;left:300px"><a id = "prov30" rel="sexylightbox">宁夏</a></span>
+
+					<span style="top:317px;left:343px"><a id = "prov18" rel="sexylightbox">湖南</a></span>
+
+
+
+					<span style="top:317px;left:400px"><a id = "prov14" rel="sexylightbox">江西</a></span>
+
+					<span style="top:250px;left:435px"><a id = "prov10" rel="sexylightbox">江苏</a></span>
+
+					<span style="top:280px;left:458px"><a id = "prov9" rel="sexylightbox">上海</a></span>
+
+					<span style="top:385px;left:355px"><a id = "prov34" rel="sexylightbox">澳门</a></span>
+
+					<span style="top:383px;left:392px"><a id = "prov33" rel="sexylightbox">香港</a></span>
+
+					<span style="top:138px;left:433px"><a id = "prov6" rel="sexylightbox">辽宁</a></span>
+
+					<span style="top:190px;left:380px"><a id = "prov3" rel="sexylightbox">河北</a></span>
+
+					<span style="top:210px;left:350px"><a id = "prov4" rel="sexylightbox">山西</a></span>
+
+					<span style="top:176px;left:408px"><a id = "prov2" rel="sexylightbox">天津</a></span>
+
+
+
+					<span style="top:130px;left:125px"><a id = "prov31" rel="sexylightbox">新疆</a></span>
+
+					<span style="top:277px;left:357px"><a id = "prov17" rel="sexylightbox">湖北</a></span>
+
+					<span style="top:240px;left:310px"><a id = "prov27" rel="sexylightbox">陕西</a></span>
+
+					<span style="top:240px;left:360px"><a id = "prov16" rel="sexylightbox">河南</a></span>
+
+					<span style="top:340px;left:420px"><a id = "prov13" rel="sexylightbox">福建</a></span>
+
+					<span style="top:360px;left:460px"><a id = "prov32" rel="sexylightbox">台湾</a></span>
+
+					<span style="top:375px;left:315px"><a id = "prov20" rel="sexylightbox">广西</a></span>
+				</div>
+			</div> -->
+
+			<div class="span6">
+				<canvas id="myCanvas" width="360" height="360">
+					Your user agent does not support the HTML5 Canvas element.
+				</canvas>
+
+			</div>
+			<div class="span6">
+				<canvas id="myCanvas2" width="360" height="360">
+					Your user agent does not support the HTML5 Canvas element.
+				</canvas>
+
+			</div>
+			<div class="row-fluid">
+				<div class="span12">
+
+					<h4 class="page_headline">【使用介绍】</h4>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;共分34个省、直辖市以及特别行政区。选好选项后，在地图上点击相应地区，可查看该地区关键词，点击"不限省份查询"则查看不限省份条件下的结果。<br>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;词云中，大小表示特色程度即相关程度，颜色表示频率大小。<br>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果对我们进行饮食习惯分析的方法感兴趣，请查看<a href="http://www.ltp-cloud.com/blog/2014-03-24-analysis-weibo-user-diet-using-ltpcloud-api/"><u>语言云博客</u></a>。
+
+					<h4 class="page_headline">【饮食地图】</h4>
+
+					<p>中文名：饮食地图		    </p>
+					<p>英文名：Eating and Drinking Map</p>
+					<p> 出品人：<a href="http://ir.hit.edu.cn/~liuting/"><u>刘挺</u></a>				  </p>
+					<p>导演：<a href="http://ir.hit.edu.cn/~car/"><u>车万翔</u></a>				  </p>
+					<p>研发：<u><a href="http://ir.hit.edu.cn/~bren/">任彬</a></u>、<u><a href="http://ir.hit.edu.cn/~zwang/">王哲</a></u>				  </p>
+					<p>出品公司：<a href="http://ir.hit.edu.cn/teams/la.html"><u>LA-TEAM</u></a> of <a href="http://ir.hit.edu.cn"><u>HIT-SCIR</u></a> </p>
+				</div>
+			</div>
+		</div>
+		<div class="row-fluid">
+			<div class="span12">
+				<!-- JiaThis Button BEGIN -->
+				<div class="jiathis_style"><span class="jiathis_txt">分享到：</span>
+					<a class="jiathis_button_qzone"></a>
+					<a class="jiathis_button_tsina"></a>
+					<a class="jiathis_button_tqq"></a>
+					<a class="jiathis_button_renren"></a>
+					<a class="jiathis_button_kaixin001"></a>
+					<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+					<a class="jiathis_counter_style"></a>
+				</div>
+				<script type="text/javascript" >
+				var jiathis_config={
+					url:"http://ys.8wss.com",
+					summary:"利用@语言云 技术，深入挖掘微博信息。#饮食地图# 可以分地区，分性别，分时间查看特色饮食。北京人真的爱吃烤鸭吗？黑龙江的特色食物是什么？详情请见:",
+					title:"微博用户饮食地图",
+					pic:"http://ys.8wss.com/static/images/example.jpg",
+					ralateuid:{
+						"tsina":"hitcir"
+					},
+					shortUrl:true,
+					hideMore:false
+				}
+				</script>
+				<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+				<!-- JiaThis Button END -->
+
+			</div>
+
+			<div class="span12">
+
+
+				<div class="ds-thread" data-thread-key="请将此处替换成文章在你的站点中的ID" data-title="我发现了一个有趣的地图,可以查看各地特色食物,快来看看" data-url="ys.8wss.com" data-image=http://ys.8wss.com/static/images/example.png></div>
+				<script type="text/javascript">
+				var duoshuoQuery = {short_name:"scir"};
+				(function() {
+					var ds = document.createElement('script');
+					ds.type = 'text/javascript';ds.async = true;
+					ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+					ds.charset = 'UTF-8';
+					(document.getElementsByTagName('head')[0] 
+						|| document.getElementsByTagName('body')[0]).appendChild(ds);
+				})();
+				</script>
+			</div>
+			
+		</div>
+
+
+	</div>
+
+	<!-- </div> -->
+</div>
+
+<div class="six columns">
+	<p><br>
+	</p>
+	<p>&nbsp;</p>
+	<p>&nbsp;</p>
+	<p>&nbsp;</p>
+	<p>&nbsp;</p>
+	<p>&nbsp;</p>
+	<p>&nbsp;</p>
+	<p>&nbsp;</p>
+	<p>&nbsp;</p>
+	<p><br>
+
+
+
+
+	</p>
+	<div id="dataTip" class="dataTip"></div> 
+</div>
+
+
+
+
+<!--  Footer - Copyright-->
+<!-- <div id="footer_bottom">
+	<!-- 960 container-fluid -->
+	<div class="container-fluid clearfix" style="background: #1b1b1b; padding: 10px 0;">
+
+		<div class="six columns text-center">
+			<div class="copyright">&copy;Copyright 2014 by <span><a href="http://ir.hit.edu.cn">HIT-SCIR</a></span>. All Rights Reserved.    </div>
+		</div>
+
+		<div class="eight columns text-center">
+			<div class="author-info"><script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1000346295'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s5.cnzz.com/z_stat.php%3Fid%3D1000346295' type='text/javascript'%3E%3C/script%3E"));</script> &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;Developed by <a href="http://ir.hit.edu.cn/teams/la.html">LA-TEAM</a> of <span><a href="http://ir.hit.edu.cn">HIT-SCIR</a></span>.    
+			</div>
+
+		</div>
+
+
+	</div><!-- End 960 container-fluid --> 
+	<!-- </div> -->
+
+
+</body>
+</html>
+
+<script type="text/javascript">
+$(document).ready(function()
+{
+	$('#food_search').bind('click', function() {
+		var param = $('#form-submit').serialize();
+
+		$('#food_search').attr({"disabled":"disabled"});
+		$.ajax({
+			url: '/search?' + param,
+			method: 'get',
+			cache: false,  		
+			success: function(msg) {
+				var obj = JSON.parse(msg);
+				mylist = obj["weight"]
+				mycolor = obj["color"]
+				WordCloud(document.getElementById('myCanvas'), 
+					{ list: mylist,
+						gridSize:9,
+						weightFactor: 1.2,
+						fontFamily: 'Average, Times, serif',
+						color: function(word){return mycolor[word];},
+						rotateRatio: 0  }
+						);
+				$('#food_search').removeAttr("disabled");
+				console.log(msg);
+			},
+			error: function(msg) {
+				$('#food_search').removeAttr("disabled");
+				console.log(msg);
+			}
+		});
+
+		return false;
+	});
+
+	$('#food_search2').bind('click', function() {
+		var param = $('#form-submit2').serialize();
+
+		$('#food_search2').attr({"disabled":"disabled"});
+		$.ajax({
+			url: '/search?' + param,
+			method: 'get',
+			cache: false,  		
+			success: function(msg) {
+				var obj = JSON.parse(msg);
+				mylist = obj["weight"]
+				mycolor = obj["color"]
+				WordCloud(document.getElementById('myCanvas2'), 
+					{ list: mylist,
+						gridSize:9,
+						weightFactor: 1.2,
+						fontFamily: 'Average, Times, serif',
+						color: function(word){return mycolor[word];},
+						rotateRatio: 0  }
+						);
+				$('#food_search2').removeAttr("disabled");
+				console.log(msg);
+			},
+			error: function(msg) {
+				$('#food_search2').removeAttr("disabled");
+				console.log(msg);
+			}
+		});
+
+		return false;
+	});
+
+
+}
+);
+
+
+
+</script>

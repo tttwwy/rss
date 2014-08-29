@@ -1,0 +1,155 @@
+#SLB-Wrapper
+{
+  margin:0.5em 0;
+  margin:auto;
+  font-family:Verdana;
+  text-align: left;
+  position: absolute;
+}
+
+#SLB-Wrapper #SLB-Background
+{
+  position: absolute;
+  left:7px;
+  top:7px;
+  float:left;
+}
+
+#SLB-Wrapper #SLB-Top
+{
+  background:transparent no-repeat scroll 100% 0;
+  height:28px;
+  margin:0 0 0 18px;
+}
+
+#SLB-Wrapper #SLB-Top a
+{
+  float:right;
+  display:inline;
+  padding:0;
+  margin:5px 10px;
+  width:41px;
+  height:16px;
+  text-decoration:none;
+}
+
+#SLB-Wrapper #SLB-Top a:hover
+{
+  background-position:0px -16px;
+}
+
+#SLB-Wrapper #SLB-Top img
+{
+  float:right;
+  border:0px;
+  margin:6px 10px;
+  width:41px;
+  height:16px;
+}
+
+#SLB-Wrapper #SLB-Top div
+{
+  background:transparent no-repeat scroll 0 0;
+  font-size:0;
+  height:28px;
+  left:-18px;
+  line-height:0;
+  position:relative;
+  width:18px;
+}
+
+#SLB-Wrapper #SLB-Bottom
+{
+  background:transparent no-repeat scroll 0 43%;
+  height:20px;
+  margin:0 18px 0 0;
+}
+
+#SLB-Wrapper #SLB-Bottom #SLB-BottomRight
+{
+  background:transparent no-repeat scroll 100% 43%;
+  font-size:0;
+  height:20px;
+  right:-18px;
+  line-height:0;
+  position:relative;
+  width:100%;
+  float:right;
+}
+
+#SLB-Wrapper #SLB-Bottom.SLB-bbnav,
+#SLB-Wrapper #SLB-Bottom.SLB-bbnav #SLB-BottomRight
+{
+  height:52px;
+}
+
+#SLB-Wrapper #SLB-Bottom.SLB-bbnav
+{
+  background-position:0 100%;
+}
+
+#SLB-Wrapper #SLB-Bottom.SLB-bbnav #SLB-BottomRight
+{
+  background-position:100% 100%;
+}
+
+#SLB-Wrapper #SLB-Contenido
+{
+  border-left: 7px solid #000;
+  border-right: 7px solid #000;
+}
+
+#SLB-Wrapper #SLB-Bottom #SLB-Navegador
+{
+  font-size: 11px;
+  color: #fff;
+  height:30px;
+  border-left:0px;
+  border-right:0px;
+  padding:10px 0px;
+  margin:0;
+  line-height:11px;
+  float:left;
+  width:100%;
+}
+
+#SLB-Wrapper #SLB-Navegador #SLB-Right,
+#SLB-Wrapper #SLB-Navegador #SLB-Left
+{
+  display:inline;
+  padding:0;
+  margin:0;
+  width:26px;
+  height:26px;
+  text-decoration:none;
+}
+
+#SLB-Wrapper #SLB-Navegador #SLB-Right
+{
+  background-position:26px 0;
+  margin:0 18px 0 10px;
+  float:right;
+}
+
+#SLB-Wrapper #SLB-Navegador #SLB-Right:hover
+{
+  background-position:26px -26px;
+}
+
+#SLB-Wrapper #SLB-Navegador #SLB-Left
+{
+  background-position:52px 0;
+  margin-right:10px;
+  float:left;
+}
+
+#SLB-Wrapper #SLB-Navegador #SLB-Left:hover
+{
+  background-position:52px -26px;
+}
+
+#SLB-Wrapper #SLB-Navegador strong
+{
+  display: block;
+  padding-top:5px;
+}

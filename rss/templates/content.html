@@ -1,0 +1,167 @@
+{% extends "baike.html" %}
+{% block search %}
+<div class="row-fluid">
+
+	<div class="span12">
+
+
+
+		<form class="form-inline"  id="form-submit">
+			<br>
+			<br>
+			<label>类别：</label>
+
+			<select  class = "span2" id="select_kind" name="kind"> 
+				<option selected="selected" value="all">全部</option>
+				<option value="fruit">水果</option>
+				<option value="food">小吃</option> 
+				<option value="wine">酒</option> 
+				<option value="drink">饮品</option> 
+				<option value="tea">茶</option> 
+			</select>
+
+
+			<label >省份：</label>
+			<select  class = "span2" id="select_prov" name="province"> 
+				<option value="">全国范围</option>
+				<option value="北京">北京市</option>
+				<option value="浙江">浙江</option>
+				<option value="天津">天津市</option>
+				<option value="安徽">安徽</option>
+				<option value="上海">上海市</option>
+				<option value="福建">福建</option> 
+				<option value="重庆">重庆市</option>
+				<option value="江西">江西</option>
+				<option value="山东">山东</option>
+				<option value="河南">河南</option>
+				<option value="湖北">湖北</option>
+				<option value="湖南">湖南</option>
+				<option value="广东">广东</option>
+				<option value="海南">海南</option>
+				<option value="山西">山西</option>
+				<option value="青海">青海</option>
+				<option value="江苏">江苏</option>
+				<option value="辽宁">辽宁</option>
+				<option value="吉林">吉林</option>
+				<option value="台湾">台湾</option>
+				<option value="河北">河北</option>
+				<option value="贵州">贵州</option>
+				<option value="四川">四川</option>
+				<option value="云南">云南</option>
+				<option value="陕西">陕西</option>
+				<option value="甘肃">甘肃</option>
+				<option value="黑龙江">黑龙江</option>
+				<option value="香港">香港</option>
+				<option value="澳门">澳门</option>
+				<option value="广西">广西</option>
+				<option value="宁夏">宁夏</option>
+				<option value="新疆">新疆</option>
+				<option value="内蒙古">内蒙古</option>
+				<option value="西藏">西藏</option>
+			</select>
+
+
+			<label>性别：</label>
+
+			<select  class = "span2" id="select_sex" name="sex"> 
+				<option selected="selected" value="">不限性别</option>
+				<option value="man">男</option>
+				<option value="woman">女</option> 
+			</select>
+
+			<label>微博时间：</label>
+			<select class = "span2" id="select_time" name="time">
+				<option selected="selected" value="">不限时间</option>
+				<option value="morning">早上/上午</option>
+				<option value="noon">中午</option> 
+				<option value="afternoon">下午</option>
+				<option value="evening">晚上</option> 
+			</select>
+			<label>饮食词汇：</label>
+			<input class="span1" type="text" id = "select_word" name="word">
+			<button id = "food_search" class="btn btn-primary"><i class="icon-search"></i>查询</button> 
+		</form>
+	</div>
+</div>
+{% endblock %}
+
+{% block other_container %}
+{% autoescape off %}
+
+<div class="row-fluid">
+	<div class="span12">
+		<table class="table table-condensed">
+			<tr>
+				<th>序号</th>
+				<th>词汇</th>
+				<th>新浪微博</th>
+				<th>时间</th>
+				<th>省份</th>
+				<th>城市</th>
+				<th>性别</th>
+				<th>微博文本</th>
+			</tr>
+			{% for line in content %}
+			<tr>
+				<td>{{ forloop.counter }}</td>
+				{% for item in  line %}
+				<td>{{item}}</td>
+				{% endfor %}
+			</tr>
+			{% endfor %}
+		</table>
+	</div>
+</div>
+{% endautoescape %}
+{% endblock %}
+
+
+{% block baike_other_js %}
+<script type="text/javascript">
+$(document).ready(function(){
+	(function($){
+		$.getUrlParam = function(name)
+		{
+			var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+			var url =  decodeURI(window.location.search);
+			var r = url.substr(1).match(reg);
+
+			if (r!=null) return unescape(r[2]); return null; 
+		}
+	})(jQuery);
+	$(function(){
+
+		kind = $.getUrlParam('kind');
+		sex = $.getUrlParam('sex');
+		province = $.getUrlParam('province');
+		time = $.getUrlParam('time');
+		word = $.getUrlParam('word');
+		
+		
+		if (province != null)
+		{
+			$("#select_prov").val(province); 
+		}
+		if (kind != null)
+		{
+			$("#select_kind").val(kind); 
+		}
+		if (sex != null)
+		{
+			$("#select_sex").val(sex); 
+		}
+		if (time != null)
+		{
+			$("#select_time").val(time); 
+		}
+		if (word != null)
+		{
+			$("#select_word").val(decodeURI(word) ); 
+		}
+
+	})
+
+});
+
+</script>
+{% endblock %}

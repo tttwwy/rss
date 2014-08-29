@@ -1,0 +1,111 @@
+<head>
+
+	<!-- Basic Page Needs
+	================================================== -->
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>微博用户饮食习惯分析</title>
+
+	<!-- Mobile Specific
+	================================================== -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- CSS
+	================================================== -->
+	<!-- <link rel="stylesheet" type="text/css"  href="/static/css/stylenew.css"> -->
+	<!-- <link rel="stylesheet" rev="stylesheet" href="/static/css/common.css" type="text/css" media="all" /> -->
+	<!-- <link rel="stylesheet" href="/static/css/sexylightbox.css" type="text/css" media="all" /> -->
+	<link href="/static/css/bootstrap.min.css" rel="stylesheet" media="screen">
+	<link href="/static/css/bootstrap-responsive.css" rel="stylesheet">
+	<link href="/static/css/prettify.css" rel="stylesheet">
+	<link href="/static/css/docs.css" rel="stylesheet">
+	
+
+	<!-- JS
+	================================================== -->
+	<script type='text/javascript' src="/static/js/jquery-1.11.1.min.js"></script>
+
+
+	<!-- // <script type="text/javascript" src="/static/js/sexylightbox.v2.3.jquery.min.js"></script> -->
+	<script src="/static/js/bootstrap.min.js"></script>
+	<script src="/static/js/bootstrap-typeahead.js"></script>
+	<script src="/static/js/wordcloud2.js"></script>
+	<script src="/static/js/esl.js"></script>
+
+	
+
+	<style>
+	.container
+	{
+		margin-top: 1cm;
+	}
+	</style>
+
+	<div class="navbar navbar-inverse navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container-fluid">
+				<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+
+				<div class="nav-collapse collapse">
+
+
+					<ul class="nav">
+						<li><a class="brand" href="/">微博饮食地图</a></li>
+
+						<li><a href="http://www.8wss.com"><i class="icon-home icon-white"></i>八维首页</a></li>
+
+						<li><a href="http://ys.8wss.com"><i class=" icon-glass icon-white"></i>饮食地图</a></li>
+
+
+						<li><a href="http://yue.8wss.com"><i class="icon-music icon-white"></i>音乐资讯</a></li>
+						<li><a href="http://qx.8wss.com"><i class="icon-heart icon-white"></i>情绪地图</a></li>					
+						<li><a href="http://yc.8wss.com"><i class="icon-film icon-white"></i>票房预测</a></li>
+						<li><a href="http://xuandu.hit.edu.cn"><i class="icon-search icon-white"></i>微博选读</a></li>
+						<li><a href="http://jitizhao.sinaapp.com/"><i class="icon-camera icon-white"></i>微博集体照</a></li>
+						
+					</ul>
+
+
+					<form class="navbar-form pull-right" action="/baike" id="baike_form-submit">
+						<input autocomplete="off" class="span3" type="text" id = "food_word" name="word">
+						<button id = "food_baike"  class="btn btn-primary" ><i class="icon-search"></i>搜索</button> 
+					</form>
+
+					<div class="navbar-text pull-right">	
+						{% for word in top_words %}
+						<a href="/baike?word={{ word}}">{{ word}}</a>	
+						{% endfor %}					
+
+					</div>
+				</div><!--/.nav-collapse -->
+			</div>
+		</div>
+
+	</div>
+
+	<script type="text/javascript">
+
+
+
+$(document).ready(
+
+	function() {
+		// alert("a");
+		$('#food_word').typeahead({
+			ajax: {
+				url: '/autocomplate',
+				triggerLength: 0,
+				method: 'get',
+	              preProcess: function(data) { // 必需的， 功能类似于process()方法
+	                   //将json字符串转为json对象   
+	                 
+	                   return $.parseJSON(data);  
+	               }  
+	           }
+	       });
+	}
+	);
+</script>

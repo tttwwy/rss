@@ -1,0 +1,243 @@
+/*
+ * Imagebox • JavaScript Application
+ * Version 2.0.0
+ * http://codecanyon.net/item/imagebox-image-viewing-script/89035
+ *
+ * Copyright (c) 2009-2012, Sarathi Hansen
+ *
+ */
+ 
+/* @group Structure */
+	
+	#ib-container {
+		position: absolute;
+		background: #fff;
+		z-index: 1000;
+	}
+	
+	#ib-image {
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+	
+	#ib-overlay {
+		position: fixed;
+		background: #000;
+		display: none;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 999;
+	}
+	
+	#ib-container, #ib-overlay, #ib-next, #ib-prev {
+		-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+		filter: alpha(opacity=0);
+		opacity: 0;
+	}
+
+/* @end */
+
+/* @group Title */
+	
+	#ib-title-mask {
+		position: relative;
+		overflow: hidden;
+	}
+	#ib-title {
+		position: relative;
+		display: none;
+		font: normal 12px/16px Tahoma, Helvetica, Arial, sans-serif;
+		text-align: left;
+		color: #ccc;
+		padding: 8px 12px;
+		padding-top: 10px;
+		
+		border-bottom: 2px solid #0A0A0A;
+		border-bottom: 2px solid rgba(10,10,10,.9);
+		
+		background: #141414;
+		background: rgba(20,20,20,.9);
+		
+		-webkit-border-radius: 0 0 3px 3px;
+		-moz-border-radius: 0 0 3px 3px;
+		border-radius: 0 0 3px 3px;
+	}
+	
+	/* @group Gallery Title */
+		
+		#ib-gallery-title {
+			color: #777;
+			font: normal 11px/16px Helvetica, Arial, sans-serif;
+		}
+		#ib-gallery-title.ib-hastitle { margin-top: 8px; }
+		
+		/* @group Gallery List */
+			
+			#ib-gallery-list strong, #ib-gallery-list a {
+				padding: 2px 3px;
+				margin-right: 2px;
+				color: #777;
+				cursor: default;
+			}
+			
+			#ib-gallery-list a {
+				color: #ccc;
+				cursor: pointer;
+				text-decoration: none;
+			}
+			#ib-gallery-list a:hover { color: #777; }
+			
+		/* @end */
+		
+	/* @end */
+	
+/* @end */
+
+/* @group Controls */
+	
+	#ib-close, #ib-next div, #ib-prev div {
+		position: absolute;
+		width: 30px;
+		height: 30px;
+		background: url(../images/sprite.png);
+	}
+	
+	#ib-close {
+		visibility: hidden;
+		right: -15px;
+		top: -15px;
+		cursor: pointer;
+		z-index: 2;
+	}
+	
+	#ib-next, #ib-prev {
+		position: absolute;
+		display: none;
+		right: 0;
+		top: 0;
+		width: 40%;
+		height: 100%;
+		cursor: pointer;
+		z-index: 1;
+		
+		background: url(../images/ie-trans.png);
+		background: -webkit-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,.6));
+		background: -moz-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,.6));
+		background: -o-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,.6));
+		background: -ms-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,.6));
+		background: linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,.6));
+	
+		-webkit-transition: opacity .2s linear;
+		-moz-transition: opacity .2s linear;
+		-o-transition: opacity .2s linear;
+		-ms-transition: opacity .2s linear;
+		transition: opacity .2s linear;
+	}
+	#ib-prev {
+		left: 0;
+		
+		background: -webkit-linear-gradient(right, rgba(0,0,0,0), rgba(0,0,0,.6));
+		background: -moz-linear-gradient(right, rgba(0,0,0,0), rgba(0,0,0,.6));
+		background: -o-linear-gradient(right, rgba(0,0,0,0), rgba(0,0,0,.6));
+		background: -ms-linear-gradient(right, rgba(0,0,0,0), rgba(0,0,0,.6));
+		background: linear-gradient(right, rgba(0,0,0,0), rgba(0,0,0,.6));
+	}
+	#ib-next:hover, #ib-prev:hover {
+		-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+		filter: alpha(opacity=100);
+		opacity: 1;
+	}
+	
+	#ib-next div, #ib-prev div {
+		right: 30px;
+		top: 50%;
+		margin-top: -15px;
+		background-position: -60px 0;
+	}
+	#ib-prev div {
+		left: 30px;
+		background-position: -30px 0;
+	}
+	
+/* @end */
+
+/* @group Shadow */
+	
+	.ib-shadow {
+		position: absolute;
+		z-index: -2;
+	}
+	
+	/* @group Shadow Corners */
+		
+		#ib-nw, #ib-ne, #ib-se, #ib-sw {
+			width: 20px;
+			height: 20px;
+			background: url(../images/sprite.png);
+		}
+		#ib-nw {
+			left: -20px;
+			top: -20px;
+			background-position: -60px -30px;
+		}
+		#ib-ne {
+			right: -20px;
+			top: -20px;
+			background-position: -40px -30px;
+		}
+		#ib-se {
+			right: -20px;
+			bottom: -20px;
+			background-position: 0 -30px;
+		}
+		#ib-sw {
+			left: -20px;
+			bottom: -20px;
+			background-position: -20px -30px;
+		}
+		
+	/* @end */
+	
+	/* @group Shadow Sides */
+		
+		#ib-n, #ib-s {
+			left: 0;
+			width: 100%;
+			height: 20px;
+			background: url(../images/shadow-v.png);
+		}
+		#ib-n {
+			top: -20px;
+			background-position: 0 -20px;
+		}
+		#ib-s { bottom: -20px; }
+		
+		
+		#ib-w, #ib-e {
+			top: 0;
+			width: 20px;
+			height: 100%;
+			background: url(../images/shadow-h.png);
+		}
+		#ib-w {
+			left: -20px;
+			background-position: -20px 0;
+		}
+		#ib-e { right: -20px; }
+		
+	/* @end */
+	
+/* @end */
+
+.ib-notrigger { cursor: default; }
+
+/*
+ * Imagebox • JavaScript Application
+ * Version 2.0.0
+ * http://codecanyon.net/item/imagebox-image-viewing-script/89035
+ *
+ * Copyright (c) 2009-2012, Sarathi Hansen
+ */
