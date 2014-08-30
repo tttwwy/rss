@@ -14,17 +14,16 @@ from django.core.cache import cache
 # 主页
 
 class WeixinRss(Feed):
-    def __init__(self):
+    def __init__(self,request,openid):
         self.title = ""
-        self.link = "/feeds/"
-        #描述
+        self.link = ""
         self.description = ""
 
     def get_object(self, request, openid):
         return openid
 
     def items(self,openid):
-        print openid
+        # print openid
         items = cache.get(openid)
         if not items:
             weixin = models.WeiXin()
@@ -52,19 +51,22 @@ def index(request):
 def feed(request,openid):
     print "feed"
     print openid
-
-    weixin = models.WeiXin()
-    items = weixin.get_items(openid)
+    items = cache.get(openid)
+    if not items:
+        weixin = models.WeiXin()
+        items = weixin.get_items(openid)
+        cache.set(openid,items)
     feed = feedgenerator.Rss201rev2Feed(
         title=items["title"],
-        link="/feed",
+        link=items["link"],
         description=items["description"],
         language="zh-cn"
     )
     for item in items["items"]:
         feed.add_item(title=item["title"],description=item["content"],link=item["link"])
 
-    str = format(feed.writeString('utf-8'))
+    str = feed.writeString('utf-8')
+    print str
     return HttpResponse(str)
 
 def format(str):
