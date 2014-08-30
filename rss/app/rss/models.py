@@ -19,9 +19,10 @@ class WeiXin():
         self.driver.get("http://weixin.sogou.com/gzh?openid=" + openid)
         weixin_name = self.driver.find_element_by_id("weixinname").text
         description = self.driver.find_element_by_class_name("sp-txt").text
+        link = "http://weixin.sogou.com/gzh?openid=" + openid
         html = self.driver.page_source
 
-        items = {"title":weixin_name,"description":description,"items":[]}
+        items = {"title":weixin_name,"description":description,"link":link,"items":[]}
         result =  re.findall("<a class=\"news_lst_tab\".*?href=\"(http://.*?)\">(.*?)</a>",html)
 
         threads = []

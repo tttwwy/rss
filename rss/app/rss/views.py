@@ -10,6 +10,7 @@ import models
 import logging
 from django.contrib.syndication.views import Feed
 from django.utils import feedgenerator
+from django.core.cache import cache
 # 主页
 
 class WeixinRss(Feed):
@@ -24,10 +25,15 @@ class WeixinRss(Feed):
 
     def items(self,openid):
         print openid
-        weixin = models.WeiXin()
-        items = weixin.get_items(openid)
+        items = cache.get(openid)
+        if not items:
+            weixin = models.WeiXin()
+            items = weixin.get_items(openid)
+            cache.set(openid,items)
+
         self.title = items["title"]
         self.description = items["description"]
+        self.link = items["link"]
         return items["items"]
     #订阅的标题
     def item_title(self, item):
