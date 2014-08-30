@@ -49,24 +49,24 @@ def index(request):
     return HttpResponse("hello")
 
 def feed(request,openid):
-    print "feed"
-    print openid
-    items = cache.get(openid)
-    if not items:
+    # print "feed"
+    # print openid
+    str = cache.get(openid)
+    if not str:
         weixin = models.WeiXin()
         items = weixin.get_items(openid)
-        cache.set(openid,items)
-    feed = feedgenerator.Rss201rev2Feed(
-        title=items["title"],
-        link=items["link"],
-        description=items["description"],
-        language="zh-cn"
-    )
-    for item in items["items"]:
-        feed.add_item(title=item["title"],description=item["content"],link=item["link"])
 
-    str = feed.writeString('utf-8')
-    print str
+        feed = feedgenerator.Rss201rev2Feed(
+            title=items["title"],
+            link=items["link"],
+            description=items["description"],
+            language="zh-cn"
+        )
+        for item in items["items"]:
+            feed.add_item(title=item["title"],description=item["content"],link=item["link"])
+        str = feed.writeString('utf-8')
+        cache.set(openid,str)
+    # print str
     return HttpResponse(str)
 
 def format(str):
