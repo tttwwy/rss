@@ -9,11 +9,16 @@ import logging
 import re
 import threading
 import urllib2
+import sys
 
 table_name = "basic_data_new"
 class WeiXin():
     def __init__(self):
-        self.driver = webdriver.PhantomJS("D:\phantomjs-1.9.7-windows\phantomjs.exe")
+        if sys.platform == "win32":
+            self.driver = webdriver.PhantomJS("D:\phantomjs-1.9.7-windows\phantomjs.exe")
+        else:
+            self.driver = webdriver.PhantomJS()
+
         self.mutex = threading.Lock()
     def get_items(self,openid):
         self.driver.get("http://weixin.sogou.com/gzh?openid=" + openid)
