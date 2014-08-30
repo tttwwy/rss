@@ -52,17 +52,21 @@ INSTALLED_APPS = (
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.middleware.cache.CacheMiddleware',
     'django.middleware.common.CommonMiddleware',
     # 'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
+
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 )
 
 ROOT_URLCONF = 'rss.urls'
 
 WSGI_APPLICATION = 'rss.wsgi.application'
 
+CACHE_BACKEND = 'db://cache_table?timeout=7200'
 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
@@ -70,13 +74,8 @@ WSGI_APPLICATION = 'rss.wsgi.application'
 DATABASES = {
 
     'default': {
-        'ENGINE':'django.db.backends.mysql',
-        'NAME': 'rss',
-        'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': '127.0.0.1',
-        'PORT': '3306',
-
+        'ENGINE':'django.db.backends.sqlite3',
+        'NAME': 'rss.db',
     }
 }
 
