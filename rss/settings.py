@@ -66,7 +66,7 @@ ROOT_URLCONF = 'rss.urls'
 
 WSGI_APPLICATION = 'rss.wsgi.application'
 
-CACHE_BACKEND = 'db://cache_table?timeout=1800'
+CACHE_BACKEND = 'db://cache_table?timeout=1000'
 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
