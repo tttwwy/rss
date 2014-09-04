@@ -7,6 +7,6 @@ from app.rss import views
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^$',views.index),
+    url(r'^weixin$',views.index),
     url(r'^rss/(.+)/$', views.feed)
 )

@@ -10,7 +10,12 @@ import re
 import threading
 import urllib2
 import sys
+from htmlentitydefs import codepoint2name, name2codepoint
+import cgi
 
+
+
+# import HTMLParser
 table_name = "basic_data_new"
 class WeiXin():
     def __init__(self):
@@ -32,7 +37,7 @@ class WeiXin():
 
         threads = []
         for i,list in enumerate(result):
-            print i
+            # print i
             item = {"link":list[0],"title":list[1]}
             items["items"].append(item)
             t = threading.Thread(target=self.get_content,args=(items,i))
@@ -53,19 +58,34 @@ class WeiXin():
     #     self.mutex.release()
 
     def get_content(self,items,i):
-        self.mutex.acquire(10)
+
+        print i,"begin",
         link = items["items"][i]["link"]
         html = urllib2.urlopen(link).read()
-        html = re.search(r"<div class=\"rich_media_inner\">[\s\S]*</div>",html).group()
+        html = cgi.escape(html)
+        # html = re.search(r"<div class=\"rich_media_inner\">[\s\S]*</div>",html).group()
         # print html
         # html = re.subn("<script type=.*>[\s\S]*?</script>","",html)[0]
         # self.driver.get(link)
         # html =  self.driver.find_element_by_id("page-content").get_attribute("innerHTML")
+        self.mutex.acquire(10)
         items["items"][i]["content"] = html
+        print i,"end",
         self.mutex.release()
+
+
+
+    def get_weixin_list(self,query):
+        query = urllib2.quote(query)
+        self.driver.get("http://weixin.sogou.com/weixin?type=1&query=" + query)
+        print self.driver.page_source
+        # weixin_name = self.driver.find_element_by_id("weixinname").text
+
+
 
 #
 # weixin = WeiXin()
+# weixin.get_weixin_list("小道消息")
 # # weixin.get_content("http://mp.weixin.qq.com/s?__biz=MzA3NDM0ODQwMw==&mid=202599201&idx=1&sn=34f906dbc2fc91de821e261693ea978a&3rd=MzA3MDU4NTYzMw==&scene=6#rd")
 # items = weixin.get_items("oIWsFt_6y60Gtq6sf_5_aAYWs4aE")
 # for item in items["items"]:
