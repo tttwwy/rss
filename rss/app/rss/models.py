@@ -40,9 +40,10 @@ class Rss():
     def add_item(self,title,description,link):
         description = description.decode('utf-8')
         item = self.dom.createElement('item')
-        item.appendChild(self.makeEasyTag("title",title))
-        item.appendChild(self.makeEasyTag("description",description,'cdata'))
-        item.appendChild(self.makeEasyTag("link",link))
+        item.appendChild(self.makeEasyTag("title",title,'text'))
+        item.appendChild(self.makeEasyTag("link",link,'text'))
+        item.appendChild(self.makeEasyTag("description",description,"cdata"))
+
         self.channel.appendChild(item)
 
     def write(self,outfile,encoding='utf-8'):
@@ -50,15 +51,25 @@ class Rss():
         root.setAttribute('version','2.0')
         self.channel.appendChild(self.makeEasyTag("title",self.title))
         self.channel.appendChild(self.makeEasyTag("link",self.link))
-        self.channel.appendChild(self.makeEasyTag("description",self.description,'cdata'))
+        self.channel.appendChild(self.makeEasyTag("description",self.description))
         self.channel.appendChild(self.makeEasyTag("language",self.language))
         root.appendChild(self.channel)
-        self.dom.writexml(outfile,encoding)
+        outfile.write(root.toprettyxml())
+        # self.dom.writexml(outfile,encoding)
 
     def writeString(self,encoding='utf-8'):
-        s = StringIO()
-        self.write(s,encoding)
-        return s.getvalue()
+        root = self.dom.documentElement
+        root.setAttribute('version','2.0')
+        self.channel.appendChild(self.makeEasyTag("title",self.title))
+        self.channel.appendChild(self.makeEasyTag("link",self.link))
+        self.channel.appendChild(self.makeEasyTag("description",self.description))
+        self.channel.appendChild(self.makeEasyTag("language",self.language))
+        root.appendChild(self.channel)
+        return root.toprettyxml()
+
+        # s = StringIO()
+        # self.write(s,encoding)
+        # return s.getvalue()
 
 class WeiXin():
     def __init__(self):
