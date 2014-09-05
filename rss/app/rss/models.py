@@ -112,21 +112,31 @@ class WeiXin():
     #     self.mutex.release()
 
     def get_content(self,items,i):
-
         print i,"begin"
         link = items["items"][i]["link"]
-        html = urllib2.urlopen(link).read()
-        # html = cgi.escape(html)
-        html = re.search(r"<div class=\"rich_media_inner\">[\s\S]*</div>",html).group()
-        # print html
-        # html = re.subn("<script type=.*>[\s\S]*?</script>","",html)[0]
-        # self.driver.get(link)
-        # html =  self.driver.find_element_by_id("page-content").get_attribute("innerHTML")
+        self.driver.get(link)
+        html =  self.driver.find_element_by_id("page-content").get_attribute("innerHTML")
         self.mutex.acquire(10)
         items["items"][i]["content"] = html
-
         self.mutex.release()
         print i,"end"
+
+    # def get_content(self,items,i):
+    #
+    #     print i,"begin"
+    #     link = items["items"][i]["link"]
+    #     html = urllib2.urlopen(link).read()
+    #     # html = cgi.escape(html)
+    #     html = re.search(r"<div class=\"rich_media_inner\">[\s\S]*</div>",html).group()
+    #     # print html
+    #     # html = re.subn("<script type=.*>[\s\S]*?</script>","",html)[0]
+    #     # self.driver.get(link)
+    #     # html =  self.driver.find_element_by_id("page-content").get_attribute("innerHTML")
+    #     self.mutex.acquire(10)
+    #     items["items"][i]["content"] = html
+    #
+    #     self.mutex.release()
+    #     print i,"end"
 
 
 
@@ -150,3 +160,6 @@ class WeiXin():
 # print urllib2.urlopen("http://mp.weixin.qq.com/s?__biz=MzA3NDM0ODQwMw==&amp;mid=202636445&amp;idx=1&amp;sn=f6352dcd7886a5c727182b18ec3aa058&amp;3rd=MzA3MDU4NTYzMw==&amp;scene=6#rd%22%20id=%22sogou_vr_11002601_title_0").read()
 
 # rss_generate()
+
+link = '''http://mp.weixin.qq.com/s?__biz=MzA5MTkzMTUzOA==&amp;amp;mid=200813666&amp;amp;idx=1&amp;amp;sn=ce23a650300da4b9485d4ec4a3c536f5&amp;amp;3rd=MzA3MDU4NTYzMw==&amp;amp;scene=6#rd" id="sogou_vr_11002601_title_0'''
+print urllib2.urlopen(link).read()

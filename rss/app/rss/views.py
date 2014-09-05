@@ -70,7 +70,7 @@ def feed(request,openid):
         )
         for item in items["items"]:
             feed.add_item(title=item["title"],description=item["content"],link=item["link"])
-        str = feed.writeString('')
+        str = feed.writeString('utf-8')
 
         cache.set(openid,str)
 
