@@ -117,7 +117,7 @@ class WeiXin():
         link = items["items"][i]["link"]
         html = urllib2.urlopen(link).read()
         # html = cgi.escape(html)
-        # html = re.search(r"<div class=\"rich_media_inner\">[\s\S]*</div>",html).group()
+        html = re.search(r"<div class=\"rich_media_inner\">[\s\S]*</div>",html).group()
         # print html
         # html = re.subn("<script type=.*>[\s\S]*?</script>","",html)[0]
         # self.driver.get(link)

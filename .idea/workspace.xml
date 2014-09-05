@@ -100,8 +100,8 @@
       <file leaf-file-name="models.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/rss/app/rss/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.68715084" vertical-offset="687" max-vertical-offset="3768">
-              <caret line="44" column="74" selection-start-line="44" selection-start-column="74" selection-end-line="44" selection-end-column="74" />
+            <state vertical-scroll-proportion="0.40223464" vertical-offset="2664" max-vertical-offset="3768">
+              <caret line="120" column="20" selection-start-line="120" selection-start-column="20" selection-end-line="120" selection-end-column="20" />
               <folding>
                 <element signature="e#139#169#0" expanded="true" />
               </folding>
@@ -793,8 +793,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/rss/app/rss/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.68715084" vertical-offset="687" max-vertical-offset="3768">
-          <caret line="44" column="74" selection-start-line="44" selection-start-column="74" selection-end-line="44" selection-end-column="74" />
+        <state vertical-scroll-proportion="0.40223464" vertical-offset="2664" max-vertical-offset="3768">
+          <caret line="120" column="20" selection-start-line="120" selection-start-column="20" selection-end-line="120" selection-end-column="20" />
           <folding>
             <element signature="e#139#169#0" expanded="true" />
           </folding>
