@@ -8,5 +8,5 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^weixin$',views.index),
-    url(r'^rss/(.+)/$', views.feed)
+    url(r'^rss/(.+)/$', views.feed_new)
 )

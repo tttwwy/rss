@@ -10,13 +10,56 @@ import re
 import threading
 import urllib2
 import sys
-from htmlentitydefs import codepoint2name, name2codepoint
-import cgi
+import xml.dom.minidom
+from django.utils.six import StringIO
+class Rss():
+    def __init__(self,title,link,description,language="zh-cn"):
+        impl = xml.dom.minidom.getDOMImplementation()
+        self.dom = impl.createDocument(None, 'rss', None)
+        self.title = title
+        self.link = link
+        self.description = description
+        self.language = language
+
+        self.channel = self.dom.createElement('channel')
 
 
+    def makeEasyTag(self,tagname, value, type='text'):
+             tag = self.dom.createElement(tagname)
+             if value.find(']]>') > -1:
+                 type = 'text'
+             if type == 'text':
+                 value = value.replace('&', '&amp;')
+                 value = value.replace('<', '&lt;')
+                 text = self.dom.createTextNode(value)
+             elif type == 'cdata':
+                 text = self.dom.createCDATASection(value)
+             tag.appendChild(text)
+             return tag
 
-# import HTMLParser
-table_name = "basic_data_new"
+    def add_item(self,title,description,link):
+        description = description.decode('utf-8')
+        item = self.dom.createElement('item')
+        item.appendChild(self.makeEasyTag("title",title))
+        item.appendChild(self.makeEasyTag("description",description,'cdata'))
+        item.appendChild(self.makeEasyTag("link",link))
+        self.channel.appendChild(item)
+
+    def write(self,outfile,encoding='utf-8'):
+        root = self.dom.documentElement
+        root.setAttribute('version','2.0')
+        self.channel.appendChild(self.makeEasyTag("title",self.title))
+        self.channel.appendChild(self.makeEasyTag("link",self.link))
+        self.channel.appendChild(self.makeEasyTag("description",self.description,'cdata'))
+        self.channel.appendChild(self.makeEasyTag("language",self.language))
+        root.appendChild(self.channel)
+        self.dom.writexml(outfile,encoding)
+
+    def writeString(self,encoding='utf-8'):
+        s = StringIO()
+        self.write(s,encoding)
+        return s.getvalue()
+
 class WeiXin():
     def __init__(self):
         if sys.platform == "win32":
@@ -45,7 +88,7 @@ class WeiXin():
             threads.append(t)
 
         for t in threads:
-            t.join()
+            t.join(5)
         self.driver.close()
         return items
 
@@ -59,10 +102,10 @@ class WeiXin():
 
     def get_content(self,items,i):
 
-        print i,"begin",
+        print i,"begin"
         link = items["items"][i]["link"]
         html = urllib2.urlopen(link).read()
-        html = cgi.escape(html)
+        # html = cgi.escape(html)
         # html = re.search(r"<div class=\"rich_media_inner\">[\s\S]*</div>",html).group()
         # print html
         # html = re.subn("<script type=.*>[\s\S]*?</script>","",html)[0]
@@ -70,8 +113,9 @@ class WeiXin():
         # html =  self.driver.find_element_by_id("page-content").get_attribute("innerHTML")
         self.mutex.acquire(10)
         items["items"][i]["content"] = html
-        print i,"end",
+
         self.mutex.release()
+        print i,"end"
 
 
 
@@ -94,3 +138,4 @@ class WeiXin():
 
 # print urllib2.urlopen("http://mp.weixin.qq.com/s?__biz=MzA3NDM0ODQwMw==&amp;mid=202636445&amp;idx=1&amp;sn=f6352dcd7886a5c727182b18ec3aa058&amp;3rd=MzA3MDU4NTYzMw==&amp;scene=6#rd%22%20id=%22sogou_vr_11002601_title_0").read()
 
+# rss_generate()

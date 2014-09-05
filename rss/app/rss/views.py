@@ -11,6 +11,7 @@ import logging
 from django.contrib.syndication.views import Feed
 from django.utils import feedgenerator
 from django.core.cache import cache
+
 # 主页
 #
 # class WeixinRss(Feed):
@@ -69,15 +70,39 @@ def feed(request,openid):
         )
         for item in items["items"]:
             feed.add_item(title=item["title"],description=item["content"],link=item["link"])
+        str = feed.writeString('')
+
+        cache.set(openid,str)
+
+    return HttpResponse(str)
+
+
+
+
+def feed_new(request,openid):
+    str = cache.get(openid)
+    if not str:
+        weixin = models.WeiXin()
+        items = weixin.get_items(openid)
+        feed = models.Rss(
+            title=items["title"],
+            link=items["link"],
+            description=items["description"],
+            language="zh-cn"
+        )
+        for item in items["items"]:
+            feed.add_item(title=item["title"],description=item["content"],link=item["link"])
         str = feed.writeString('utf-8')
 
         cache.set(openid,str)
-    print str
+
     return HttpResponse(str)
 
-def format(str):
-	str = str.replace('>', '>\n')
-	str = str.replace('<', '\n<')
-	str = str.replace('\n\n', '\n')
-	return str
 
+def format(str):
+	new_str = str.replace('&', '&amp;')
+	new_str = str.replace('<', '&lt;')
+	# new_str = str.replace('\n\n', '\n')
+	return new_str
+
+# rss_generate()
