@@ -119,7 +119,9 @@ class WeiXin():
         # self.driver.get(link)
         # html =  self.driver.find_element_by_id("page-content").get_attribute("innerHTML")
         html = urllib2.urlopen(link).read()
-        html = re.search(r"<div class=\"rich_media_inner\">[\s\S]*</div>",html).group()
+        html_inner = re.search(r"<div class=\"rich_media_inner\">[\s\S]*</div>",html).group()
+        if html_inner:
+            html = html_inner
         html = re.sub(r"(<img.*?data-src=)(\".*?\")(.*?/>)","<img src=\\2 />",html)
         self.mutex.acquire(3)
 

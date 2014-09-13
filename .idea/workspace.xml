@@ -63,10 +63,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="views.py" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="views.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/rss/app/rss/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="2.658031" vertical-offset="645" max-vertical-offset="2448">
+            <state vertical-scroll-proportion="0.0" vertical-offset="1581" max-vertical-offset="2448">
               <caret line="102" column="39" selection-start-line="102" selection-start-column="39" selection-end-line="102" selection-end-column="39" />
               <folding />
             </state>
@@ -93,11 +93,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="models.py" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="models.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/rss/app/rss/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.2" vertical-offset="1668" max-vertical-offset="4296">
-              <caret line="77" column="7" selection-start-line="77" selection-start-column="7" selection-end-line="77" selection-end-column="35" />
+            <state vertical-scroll-proportion="0.51016635" vertical-offset="2676" max-vertical-offset="4344">
+              <caret line="123" column="29" selection-start-line="123" selection-start-column="29" selection-end-line="123" selection-end-column="29" />
               <folding>
                 <element signature="e#139#169#0" expanded="true" />
               </folding>
@@ -119,8 +119,8 @@
         <option value="$PROJECT_DIR$/django.xml" />
         <option value="$PROJECT_DIR$/rss/urls.py" />
         <option value="$PROJECT_DIR$/rss/app/rss/views.py" />
-        <option value="$PROJECT_DIR$/rss/app/rss/models.py" />
         <option value="$PROJECT_DIR$/rss/settings.py" />
+        <option value="$PROJECT_DIR$/rss/app/rss/models.py" />
       </list>
     </option>
   </component>
@@ -854,16 +854,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rss/app/rss/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.2" vertical-offset="1668" max-vertical-offset="4296">
-          <caret line="77" column="7" selection-start-line="77" selection-start-column="7" selection-end-line="77" selection-end-column="35" />
-          <folding>
-            <element signature="e#139#169#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/rss/settings.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="1413" max-vertical-offset="2784">
@@ -882,9 +872,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/rss/app/rss/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.658031" vertical-offset="645" max-vertical-offset="2448">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1581" max-vertical-offset="2448">
           <caret line="102" column="39" selection-start-line="102" selection-start-column="39" selection-end-line="102" selection-end-column="39" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rss/app/rss/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.51016635" vertical-offset="2676" max-vertical-offset="4344">
+          <caret line="123" column="29" selection-start-line="123" selection-start-column="29" selection-end-line="123" selection-end-column="29" />
+          <folding>
+            <element signature="e#139#169#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
