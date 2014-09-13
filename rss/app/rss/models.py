@@ -11,6 +11,8 @@ import threading
 import urllib2
 import sys
 import xml.dom.minidom
+reload(sys)
+sys.setdefaultencoding("utf-8")
 from django.utils.six import StringIO
 class Rss():
     def __init__(self,title,link,description,language="zh-cn"):
@@ -114,10 +116,15 @@ class WeiXin():
     def get_content(self,items,i):
         print i,"begin"
         link = items["items"][i]["link"]
-        self.driver.get(link)
-        html =  self.driver.find_element_by_id("page-content").get_attribute("innerHTML")
-        self.mutex.acquire(10)
+        # self.driver.get(link)
+        # html =  self.driver.find_element_by_id("page-content").get_attribute("innerHTML")
+        html = urllib2.urlopen(link).read()
+        html = re.search(r"<div class=\"rich_media_inner\">[\s\S]*</div>",html).group()
+        html = re.sub(r"(<img.*?data-src=)(\".*?\")(.*?/>)","<img src=\\2 />",html)
+        self.mutex.acquire(3)
+
         items["items"][i]["content"] = html
+
         self.mutex.release()
         print i,"end"
 
@@ -161,5 +168,7 @@ class WeiXin():
 
 # rss_generate()
 
-link = '''http://mp.weixin.qq.com/s?__biz=MzA5MTkzMTUzOA==&amp;amp;mid=200813666&amp;amp;idx=1&amp;amp;sn=ce23a650300da4b9485d4ec4a3c536f5&amp;amp;3rd=MzA3MDU4NTYzMw==&amp;amp;scene=6#rd" id="sogou_vr_11002601_title_0'''
-print urllib2.urlopen(link).read()
+# link = '''http://mp.weixin.qq.com/s?__biz=MzA5MTkzMTUzOA==&amp;amp;mid=200813666&amp;amp;idx=1&amp;amp;sn=ce23a650300da4b9485d4ec4a3c536f5&amp;amp;3rd=MzA3MDU4NTYzMw==&amp;amp;scene=6#rd" id="sogou_vr_11002601_title_0'''
+# html =  urllib2.urlopen(link).read()
+# print html
+# print re.sub(r"(<img.*?data-src=)\"(.+?\")(.*?/>)","<img src=\\2 />",html)

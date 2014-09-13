@@ -10,7 +10,7 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 
-import os,logging
+import os,logging,sys
 HERE = os.path.dirname(os.path.abspath(__file__)).replace('\\','/')
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
@@ -67,8 +67,10 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'rss.urls'
 
 WSGI_APPLICATION = 'rss.wsgi.application'
-
-CACHE_BACKEND = 'db://cache_table?timeout=1000'
+if sys.platform == "win32":
+    CACHE_BACKEND = 'db://cache_table?timeout=1'
+else:
+    CACHE_BACKEND = 'db://cache_table?timeout=1000'
 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
