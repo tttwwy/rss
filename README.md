@@ -4,7 +4,7 @@
 ##**环境依赖**
  1. phantomjs 
 
-    ```shell
+    ```sh
     cd /usr/local/share
     sudo wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-1.9.7-linux-x86_64.tar.bz2
     sudo tar xjf phantomjs-1.9.7-linux-x86_64.tar.bz2
@@ -15,11 +15,11 @@
 
  2. selenium
 
-    ```shell
+    ```sh
     sudo pip install -U selenium
     ```
  3. Django
 
-    ```shell
+    ```sh
     sudo pip install -U django
     ```
