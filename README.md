@@ -1,7 +1,7 @@
 ##**简介**
 将微信公众号的订阅内容转换成RSS格式订阅，以便在RSS阅读器上查看
 
-##**工具依赖**
+##**环境依赖**
  1. phantomjs 
 
     ```shell
@@ -18,4 +18,8 @@
     ```shell
     sudo pip install -U selenium
     ```
+ 3. Django
 
+    ```shell
+    sudo pip install -U django
+    ```
