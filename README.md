@@ -25,12 +25,12 @@
     ```
 
  4. pip
-  4.1
+     1
      ```sh
      wget https://bootstrap.pypa.io/get-pip.py
      python get-pip.py
      ```
-  4.2
+     2
      ```sh
      sudo apt-get install python-pip
      ```
