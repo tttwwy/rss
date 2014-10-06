@@ -23,3 +23,49 @@
     ```sh
     sudo pip install -U django
     ```
+
+ 4. pip
+ 4.1
+     ```sh
+     wget https://bootstrap.pypa.io/get-pip.py
+     python get-pip.py
+     ```
+ 4.2
+     ```sh
+     sudo apt-get install python-pip
+     ```
+
+ 5.uwsgi
+    ```sh
+    sudo apt-get install libxml2-dev python-dev
+    sudo pip install uwsgi
+    ```
+    uwsgi.xml
+    记得去掉
+    ```xml
+    <plugins>python</plugins>
+    ```
+     
+    ```xml
+    <uwsgi>                       
+    <socket>127.0.0.1:8631</socket>
+    <chdir>./</chdir>
+    <pythonpath>./rss/</pythonpath>
+    <module>wsgi</module>
+    </uwsgi>
+    ```
+
+6.nginx
+    ```shell
+    sudo apt-get remove apache2
+    sudo apt-get install nginx
+    sudo vi /etc/nginx/sites-enabled/default
+    ```
+    
+    ```php
+    location /rss/ {
+        uwsgi_pass 127.0.0.1:8631;
+         include uwsgi_params;
+     }
+    ```
+
