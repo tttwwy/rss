@@ -36,7 +36,7 @@
      sudo apt-get install python-pip
      ```
 
- 5.uwsgi
+ 5. uwsgi
  
     ```sh
     sudo apt-get install libxml2-dev python-dev
@@ -57,7 +57,8 @@
     </uwsgi>
     ```
 
- 6.nginx
+ 6. nginx
+
     ```shell
     sudo apt-get remove apache2
     sudo apt-get install nginx
