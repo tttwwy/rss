@@ -26,12 +26,12 @@
 
  4. pip
      
-     4.1
+     方法1
      ```sh
      wget https://bootstrap.pypa.io/get-pip.py
      python get-pip.py
      ```
-     4.2
+     方法2
      ```sh
      sudo apt-get install python-pip
      ```
