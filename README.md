@@ -25,6 +25,7 @@
     ```
 
  4. pip
+     
      4.1
      ```sh
      wget https://bootstrap.pypa.io/get-pip.py
@@ -36,6 +37,7 @@
      ```
 
  5.uwsgi
+ 
     ```sh
     sudo apt-get install libxml2-dev python-dev
     sudo pip install uwsgi
