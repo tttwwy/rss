@@ -25,12 +25,12 @@
     ```
 
  4. pip
- 4.1
+  4.1
      ```sh
      wget https://bootstrap.pypa.io/get-pip.py
      python get-pip.py
      ```
- 4.2
+  4.2
      ```sh
      sudo apt-get install python-pip
      ```
@@ -55,7 +55,7 @@
     </uwsgi>
     ```
 
-6.nginx
+ 6.nginx
     ```shell
     sudo apt-get remove apache2
     sudo apt-get install nginx
