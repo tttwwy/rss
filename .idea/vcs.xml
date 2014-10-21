@@ -2,9 +2,6 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="" />
-    <mapping directory="$PROJECT_DIR$/../../python/cikm2014" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/../../python/machine learning" vcs="Git" />
-    <mapping directory="H:/金山快盘/Program/python/weibo" vcs="Git" />
   </component>
 </project>
 

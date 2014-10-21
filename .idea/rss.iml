@@ -4,9 +4,6 @@
     <content url="file://$MODULE_DIR$" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="cikm2014" />
-    <orderEntry type="module" module-name="weibo" />
-    <orderEntry type="module" module-name="machine learning" />
   </component>
 </module>
 
