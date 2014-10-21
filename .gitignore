@@ -92,3 +92,11 @@ $RECYCLE.BIN/
 *.msi
 *.msm
 *.msp
+.idea/workspace.xml
+*.xml
+*.db
+*.db
+.idea/workspace.xml
+.idea/vcs.xml
+.idea/rss.iml
+.idea/modules.xml
