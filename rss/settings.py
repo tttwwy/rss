@@ -10,15 +10,17 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 
-import os,logging,sys
-HERE = os.path.dirname(os.path.abspath(__file__)).replace('\\','/')
+import os
+import logging, sys
+
+HERE = os.path.dirname(os.path.abspath(__file__)).replace('\\', '/')
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 logging.basicConfig(level=logging.DEBUG,
                     format=' %(process)d: %(asctime)s %(funcName)s %(lineno)d %(message)s',
                     datefmt='%Y-%m-%d %H:%M:%S',
-                    filename=os.path.join(HERE, 'django.log'),
+                    filename=os.path.join(HERE, 'rss.log'),
                     filemode='a')
 
 
@@ -38,7 +40,7 @@ ALLOWED_HOSTS = []
 
 # Application definition
 TEMPLATE_DIRS = (
-    os.path.join(os.path.dirname(__file__), 'templates').replace('\\','/'),
+    os.path.join(os.path.dirname(__file__), 'templates').replace('\\', '/'),
 )
 
 INSTALLED_APPS = (
@@ -51,7 +53,7 @@ INSTALLED_APPS = (
 )
 
 MIDDLEWARE_CLASSES = (
-     # 'django.middleware.cache.UpdateCacheMiddleware',
+    # 'django.middleware.cache.UpdateCacheMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
 
@@ -78,7 +80,7 @@ else:
 DATABASES = {
 
     'default': {
-        'ENGINE':'django.db.backends.sqlite3',
+        'ENGINE': 'django.db.backends.sqlite3',
         'NAME': 'rss.db',
     }
 }
@@ -105,6 +107,6 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    os.path.join(HERE, 'static/').replace('\\','/'),
+    os.path.join(HERE, 'static/').replace('\\', '/'),
 )
 STATIC_URL = '/static/'

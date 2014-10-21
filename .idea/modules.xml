@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../../python/cikm2014/.idea/cikm2014.iml" filepath="$PROJECT_DIR$/../../python/cikm2014/.idea/cikm2014.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../python/machine learning/.idea/machine learning.iml" filepath="$PROJECT_DIR$/../../python/machine learning/.idea/machine learning.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/rss.iml" filepath="$PROJECT_DIR$/.idea/rss.iml" />
+      <module fileurl="file://H:/金山快盘/Program/python/weibo/.idea/weibo.iml" filepath="H:/金山快盘/Program/python/weibo/.idea/weibo.iml" />
     </modules>
   </component>
 </project>
