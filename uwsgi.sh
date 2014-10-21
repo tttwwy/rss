@@ -1,2 +1,3 @@
 killall -9 uwsgi
-uwsgi -x django.xml --daemonize django.log
+python manage.py createcachetable cache_table
+uwsgi -x rss.xml --daemonize uwsgi.log
