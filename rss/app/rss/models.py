@@ -59,9 +59,10 @@ class WeiXin():
         link = items["items"][i]["link"]
         html = urllib2.urlopen(link).read()
 
-        html_inner = re.search(r"<div class=\"rich_media_inner\">[\s\S]*</div>", html).group()
+        html_inner = re.search(r"<div class=\"rich_media_inner\">[\s\S]*<div class=\"rich_media_tool\" id=\"js_toobar\">", html).group()
         if html_inner:
             html = html_inner
+        html = html.replace("<div class=\"rich_media_tool\" id=\"js_toobar\">","")
         html = re.sub(r"(<img.*?data-src=)(\".*?\")(.*?/>)", "<img src=\\2 />", html)
         self.mutex.acquire(3)
         items["items"][i]["content"] = html
