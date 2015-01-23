@@ -5,7 +5,9 @@
  1. phantomjs
  2. selenium
  3. django
+ 
  phantomjs在部署的时候，可能会遇到问题，下面是我使用的部署方法。
+
  1. phantomjs 
 
     ```sh
