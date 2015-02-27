@@ -4,12 +4,20 @@
 
 # Create your models here.
 # from django.db import connection
-from selenium import webdriver
+
 import logging
 import re
 import threading
 import urllib2
+import json
 import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
+
+try:
+    import xml.etree.cElementTree as etree
+except ImportError:
+    import xml.etree.ElementTree as etree
 
 def full_text_rss(url):
     print "begin"
@@ -20,58 +28,57 @@ def full_text_rss(url):
     html = re.sub("</content.*?>","</description>",html)
     return html
 
-
 class WeiXin():
     def __init__(self):
-        if sys.platform == "win32":
-            self.driver = webdriver.PhantomJS("D:\phantomjs-1.9.7-windows\phantomjs.exe")
-        else:
-            self.driver = webdriver.PhantomJS()
-
         self.mutex = threading.Lock()
 
-    def get_items(self, openid):
-        self.driver.get("http://weixin.sogou.com/gzh?openid=" + openid)
-        weixin_name = self.driver.find_element_by_id("weixinname").text
-        description = self.driver.find_element_by_class_name("sp-txt").text
-        link = "http://weixin.sogou.com/gzh?openid=" + openid
-        html = self.driver.page_source
-
+    def get_items(self,openid):
+        print openid
+        link = "http://weixin.sogou.com/gzh?openid={0}".format(openid)
+        print link
+        html = urllib2.urlopen(link).read()
+        # print html
+        weixin_name = re.search("<h3 id=\"weixinname\">(.*?)</h3>", html).group(1)
+        description = re.search("<span class=\"sp-txt\">(.*?)</span>", html).group(1)
         items = {"title": weixin_name, "description": description, "link": link, "items": []}
-        result = re.findall("<a class=\"news_lst_tab\".*?href=\"(http://.*?)\">(.*?)</a>", html)
+
+        js_url = "http://weixin.sogou.com/gzhjs?cb=sogou.weixin.gzhcb&openid={0}".format(openid)
+        js = urllib2.urlopen(js_url).read()
+        json_text = re.search("sogou.weixin.gzhcb\((.*)\)", js).group(1)
+        json_text = json_text.replace("\\\"", "\'")
+        json_text = json_text.replace('gbk', 'utf-8')
+        json_items = json.loads(json_text)
 
         threads = []
-        for i, list in enumerate(result):
-            # print i
-            item = {"link": list[0], "title": list[1]}
+        for i,xml in enumerate(json_items['items']):
+            tree = etree.fromstring(xml)
+            title = tree.findall("./item/display/title")[0].text
+            url = tree.findall("./item/display/url")[0].text
+
+            item = {"link": url, "title": title}
+            # print item
             items["items"].append(item)
-            t = threading.Thread(target=self.get_content, args=(items, i))
+            t = threading.Thread(target=self.get_content, args=(item,))
             t.start()
             threads.append(t)
-
         for t in threads:
             t.join(5)
-        self.driver.close()
+
         return items
 
-    def get_content(self, items, i):
-        print i, "begin"
-        link = items["items"][i]["link"]
+    def get_content(self, item):
+        link = item["link"]
         html = urllib2.urlopen(link).read()
 
-        html_inner = re.search(r"<div class=\"rich_media_inner\">[\s\S]*<div class=\"rich_media_tool\" id=\"js_toobar\">", html).group()
+        html_inner = re.search(
+            r"<div class=\"rich_media_inner\">[\s\S]*<div class=\"rich_media_tool\" id=\"js_toobar\">", html).group()
         if html_inner:
             html = html_inner
-        html = html.replace("<div class=\"rich_media_tool\" id=\"js_toobar\">","")
+        html = html.replace("<div class=\"rich_media_tool\" id=\"js_toobar\">", "")
         html = re.sub(r"(<img.*?data-src=)(\".*?\")(.*?/>)", "<img src=\\2 />", html)
-        self.mutex.acquire(3)
-        items["items"][i]["content"] = html
-        self.mutex.release()
+        item["content"] = html
 
-    def get_weixin_list(self, query):
-        query = urllib2.quote(query)
-        self.driver.get("http://weixin.sogou.com/weixin?type=1&query=" + query)
 
 if __name__=="__main__":
-    print "begin"
-    print full_text_rss("http://www.geekonomics10000.com/feed")
+    a = NewWeiXin()
+    print a.get_items('oIWsFt_6y60Gtq6sf_5_aAYWs4aE')
