@@ -33,10 +33,9 @@ class WeiXin():
         self.mutex = threading.Lock()
 
     def get_items(self,openid):
-        print openid
         link = "http://weixin.sogou.com/gzh?openid={0}".format(openid)
-        print link
         html = urllib2.urlopen(link).read()
+        logging.info(html)
         # print html
         weixin_name = re.search("<h3 id=\"weixinname\">(.*?)</h3>", html).group(1)
         description = re.search("<span class=\"sp-txt\">(.*?)</span>", html).group(1)
