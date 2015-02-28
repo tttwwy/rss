@@ -70,7 +70,7 @@ ROOT_URLCONF = 'rss.urls'
 
 WSGI_APPLICATION = 'rss.wsgi.application'
 if sys.platform == "win32":
-    CACHE_BACKEND = 'db://cache_table?timeout=1'
+    CACHE_BACKEND = 'db://cache_table?timeout=0'
 else:
     CACHE_BACKEND = 'db://cache_table?timeout=1000'
 

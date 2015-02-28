@@ -12,6 +12,8 @@ import urllib2
 import json
 import sys
 import random
+import time
+from selenium import webdriver
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
@@ -32,6 +34,10 @@ def full_text_rss(url):
 class WeiXin():
     def __init__(self):
         self.mutex = threading.Lock()
+        if sys.platform == "win32":
+            self.driver = webdriver.PhantomJS("D:\phantomjs-1.9.7-windows\phantomjs.exe")
+        else:
+            self.driver = webdriver.PhantomJS()
         self.useragent=['Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_8; en-us) AppleWebKit/534.50 (KHTML, like Gecko) Version/5.1 Safari/534.50',
                         'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-us) AppleWebKit/534.50 (KHTML, like Gecko) Version/5.1 Safari/534.50',
                         'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0',
@@ -44,9 +50,14 @@ class WeiXin():
                         'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; Avant Browser)',
                         'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)',
                         'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_0) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.56 Safari/535.11',
-                        'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.99 Safari/537.36']
-    def get_html(self,url):
-        user_agent = self.useragent[random.randint(0,len(self.useragent)-1)]
+                        'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.99 Safari/537.36'
+                        ]
+    def get_html(self,url,is_js=False):
+        print "url:",url
+        if is_js:
+            self.driver.get(url)
+        return self.driver.page_source
+        user_agent = random.choice(self.useragent)
         headers = {
             'User-Agent': user_agent,
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
@@ -56,19 +67,20 @@ class WeiXin():
             'Host': 'weixin.sogou.com',
             'DNT': '1',
             'Cache-Control': 'max-age=0',
+            'Cookie':"SUV=" + str(int(time.time()*1000))+str(int(random.random()*1000))+";path=/;expires=Sun, 29 July 2046 00:00:00 UTC;domain="+".soso.com"
             }
         request = urllib2.Request(url, headers=headers)
         response = urllib2.urlopen(request)
         html = response.read()
         return html
     def get_items(self,openid):
-        link = "http://weixin.sogou.com/gzh?openid={0}&repp=1".format(openid)
+        link = "http://weixin.sogou.com/gzh?openid={0}".format(openid)
 
-        html = self.get_html(link)
+        html = self.get_html(link,is_js=True)
 
         logging.info(openid)
         logging.info(link)
-        # logging.info(html)
+        print html
 
         weixin_name = re.search("<h3 id=\"weixinname\">(.*?)</h3>", html).group(1)
         description = re.search("<span class=\"sp-txt\">(.*?)</span>", html).group(1)
