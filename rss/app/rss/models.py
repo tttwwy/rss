@@ -45,9 +45,7 @@ class WeiXin():
                         'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)',
                         'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_0) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.56 Safari/535.11',
                         'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.99 Safari/537.36']
-
-    def get_items(self,openid):
-        link = "http://weixin.sogou.com/gzh?openid={0}&repp=1".format(openid)
+    def get_html(self,url):
         user_agent = self.useragent[random.randint(0,len(self.useragent)-1)]
         headers = {
             'User-Agent': user_agent,
@@ -58,11 +56,15 @@ class WeiXin():
             'Host': 'weixin.sogou.com',
             'DNT': '1',
             'Cache-Control': 'max-age=0',
-        }
-
-        request = urllib2.Request(link, headers=headers)
+            }
+        request = urllib2.Request(url, headers=headers)
         response = urllib2.urlopen(request)
         html = response.read()
+        return html
+    def get_items(self,openid):
+        link = "http://weixin.sogou.com/gzh?openid={0}&repp=1".format(openid)
+
+        html = self.get_html(link)
 
         logging.info(openid)
         logging.info(link)
@@ -98,7 +100,7 @@ class WeiXin():
 
     def get_content(self, item):
         link = item["link"]
-        html = urllib2.urlopen(link).read()
+        html = self.get_html(link)
 
         html_inner = re.search(
             r"<div class=\"rich_media_inner\">[\s\S]*<div class=\"rich_media_tool\" id=\"js_toobar\">", html).group()
