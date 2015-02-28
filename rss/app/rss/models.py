@@ -33,7 +33,7 @@ class WeiXin():
         self.mutex = threading.Lock()
 
     def get_items(self,openid):
-        link = "http://weixin.sogou.com/gzh?openid={0}".format(openid)
+        link = "http://weixin.sogou.com/gzh?openid={0}&repp=1".format(openid)
         html = urllib2.urlopen(link).read()
         logging.info(openid)
         logging.info(link)
