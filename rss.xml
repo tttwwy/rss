@@ -3,6 +3,5 @@
     <socket>127.0.0.1:8631</socket>
     <chdir>./</chdir>
     <pythonpath>./rss/</pythonpath>
-    <module>wsgi</module>
-    <plugins>python</plugins>
+    <module>wsgi</module>    
 </uwsgi>
