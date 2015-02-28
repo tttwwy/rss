@@ -35,7 +35,7 @@ class WeiXin():
     def __init__(self):
         self.mutex = threading.Lock()
         if sys.platform == "win32":
-            self.driver = webdriver.PhantomJS("D:\phantomjs-1.9.7-windows\phantomjs.exe")
+            self.driver = webdriver.PhantomJS("D:\phantomjs.exe")
         else:
             self.driver = webdriver.PhantomJS()
         self.useragent=['Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_8; en-us) AppleWebKit/534.50 (KHTML, like Gecko) Version/5.1 Safari/534.50',
@@ -56,24 +56,24 @@ class WeiXin():
         print "url:",url
         if is_js:
             self.driver.get(url)
-        return self.driver.page_source
-
-        user_agent = random.choice(self.useragent)
-        headers = {
-            'User-Agent': user_agent,
-            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-            'Accept-Encoding': 'deflate, sdch',
-            'Accept-Language': 'zh-CN,zh;q=0.8,zh-TW;q=0.6',
-            'Connection': 'keep-alive',
-            'Host': 'weixin.sogou.com',
-            'DNT': '1',
-            'Cache-Control': 'max-age=0',
-            'Cookie':"SUV=" + str(int(time.time()*1000))+str(int(random.random()*1000))+";path=/;expires=Sun, 29 July 2046 00:00:00 UTC;domain="+".soso.com"
-            }
-        request = urllib2.Request(url, headers=headers)
-        response = urllib2.urlopen(request)
-        html = response.read()
-        return html
+            return self.driver.page_source
+        else:
+            return urllib2.urlopen(url).read()
+        # user_agent = random.choice(self.useragent)
+        # headers = {
+        #     'User-Agent': user_agent,
+        #     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+        #     'Accept-Encoding': 'deflate, sdch',
+        #     'Accept-Language': 'zh-CN,zh;q=0.8,zh-TW;q=0.6',
+        #     'Connection': 'keep-alive',
+        #     'Host': 'weixin.sogou.com',
+        #     'DNT': '1',
+        #     'Cache-Control': 'max-age=0',
+        #     }
+        # request = urllib2.Request(url, headers=headers)
+        # response = urllib2.urlopen(request)
+        # html = response.read()
+        # return html
     def get_items(self,openid):
         link = "http://weixin.sogou.com/gzh?openid={0}".format(openid)
 
@@ -81,10 +81,11 @@ class WeiXin():
 
         logging.info(openid)
         logging.info(link)
-        print html
+        # print html
 
         weixin_name = re.search("<h3 id=\"weixinname\">(.*?)</h3>", html).group(1)
         description = re.search("<span class=\"sp-txt\">(.*?)</span>", html).group(1)
+        print weixin_name,description
         items = {"title": weixin_name, "description": description, "link": link, "items": []}
 
         js_url = "http://weixin.sogou.com/gzhjs?cb=sogou.weixin.gzhcb&openid={0}".format(openid)
@@ -113,10 +114,11 @@ class WeiXin():
 
     def get_content(self, item):
         link = item["link"]
-        html = self.get_html(link)
-
-        html_inner = re.search(
-            r"<div class=\"rich_media_inner\">[\s\S]*<div class=\"rich_media_tool\" id=\"js_toobar\">", html).group()
+        print link
+        html = self.get_html(link,is_js=False)
+        # print html
+        # html = urllib2.urlopen(link).read()
+        html_inner = re.search(r"<div class=\"rich_media_inner\">[\s\S]*<div class=\"rich_media_tool\" id=\"js_toobar\">", html).group()
         if html_inner:
             html = html_inner
         html = html.replace("<div class=\"rich_media_tool\" id=\"js_toobar\">", "")
@@ -125,5 +127,5 @@ class WeiXin():
 
 
 if __name__=="__main__":
-    a = NewWeiXin()
+    a = WeiXin()
     print a.get_items('oIWsFt_6y60Gtq6sf_5_aAYWs4aE')
