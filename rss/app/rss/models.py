@@ -57,6 +57,7 @@ class WeiXin():
         if is_js:
             self.driver.get(url)
         return self.driver.page_source
+
         user_agent = random.choice(self.useragent)
         headers = {
             'User-Agent': user_agent,
