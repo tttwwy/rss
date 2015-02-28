@@ -35,8 +35,10 @@ class WeiXin():
     def get_items(self,openid):
         link = "http://weixin.sogou.com/gzh?openid={0}".format(openid)
         html = urllib2.urlopen(link).read()
+        logging.info(openid)
+        logging.info(link)
         logging.info(html)
-        # print html
+
         weixin_name = re.search("<h3 id=\"weixinname\">(.*?)</h3>", html).group(1)
         description = re.search("<span class=\"sp-txt\">(.*?)</span>", html).group(1)
         items = {"title": weixin_name, "description": description, "link": link, "items": []}
