@@ -66,7 +66,7 @@ class WeiXin():
 
         logging.info(openid)
         logging.info(link)
-        logging.info(html)
+        # logging.info(html)
 
         weixin_name = re.search("<h3 id=\"weixinname\">(.*?)</h3>", html).group(1)
         description = re.search("<span class=\"sp-txt\">(.*?)</span>", html).group(1)
