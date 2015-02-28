@@ -11,6 +11,7 @@ import threading
 import urllib2
 import json
 import sys
+import random
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
@@ -31,10 +32,38 @@ def full_text_rss(url):
 class WeiXin():
     def __init__(self):
         self.mutex = threading.Lock()
+        self.useragent=['Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_8; en-us) AppleWebKit/534.50 (KHTML, like Gecko) Version/5.1 Safari/534.50',
+                        'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-us) AppleWebKit/534.50 (KHTML, like Gecko) Version/5.1 Safari/534.50',
+                        'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0',
+                        'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0; Trident/4.0)',
+                        'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0)',
+                        'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; TencentTraveler 4.0)',
+                        'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; Maxthon 2.0)',
+                        'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; The World)',
+                        'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; Trident/4.0; SE 2.X MetaSr 1.0; SE 2.X MetaSr 1.0; .NET CLR 2.0.50727; SE 2.X MetaSr 1.0)',
+                        'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; Avant Browser)',
+                        'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)',
+                        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_0) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.56 Safari/535.11',
+                        'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.99 Safari/537.36']
 
     def get_items(self,openid):
         link = "http://weixin.sogou.com/gzh?openid={0}&repp=1".format(openid)
-        html = urllib2.urlopen(link).read()
+        user_agent = self.useragent[random.randint(0,len(self.useragent)-1)]
+        headers = {
+            'User-Agent': user_agent,
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+            'Accept-Encoding': 'deflate, sdch',
+            'Accept-Language': 'zh-CN,zh;q=0.8,zh-TW;q=0.6',
+            'Connection': 'keep-alive',
+            'Host': 'weixin.sogou.com',
+            'DNT': '1',
+            'Cache-Control': 'max-age=0',
+        }
+
+        request = urllib2.Request(link, headers=headers)
+        response = urllib2.urlopen(request)
+        html = response.read()
+
         logging.info(openid)
         logging.info(link)
         logging.info(html)
